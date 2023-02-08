@@ -6,3 +6,5 @@
 6. Proyecto subido GIT y realizar pruebas de utilizacion - Sesion 6 y 7
 
 Subido todo en un PDF
+
+Funciona OK
