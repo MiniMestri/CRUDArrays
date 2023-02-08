@@ -1,0 +1,8 @@
+1.Analisis de casos de uso - Sesion3
+2.RFTP - Sesion 4
+3.Pruebas programa en video
+4.Codigo comentado 
+5.Java doc - Sesion 8
+6. Proyecto subido GIT y realizar pruebas de utilizacion - Sesion 6 y 7
+
+Subido todo en un PDF
