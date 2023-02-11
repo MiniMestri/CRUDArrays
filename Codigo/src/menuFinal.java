@@ -7,23 +7,29 @@ public class menuFinal {
 		int num, posicion;
 		int posicionCon = 0;
 		String[] datos = new String[20];
+		String[] fecha = new String[20];
+		String[] valor = new String[20];
 		int posicionFil;
-		inicializar(datos, "x");
+		inicializar(datos, fecha, valor, "x");
 
 		do {
 			menu();
 			num = pedirNumMenu();
 			switch (num) {
 			case 1:
-				posicion = buscarLibre(datos, "x");
-				System.out.println("Introduce una pelicula");
-				datos[posicion] = pedirString();
-				System.out.println(Arrays.toString(datos));
-
+				do {
+					posicion = buscarLibre(datos, fecha,valor, "x");
+					System.out.println("Introduce una pelicula");
+					datos[posicion] = pedirString();
+					System.out.println("Introduce una Fecha");
+					fecha[posicion] = pedirString();
+					System.out.println("Introduce una valoracion");
+					valor[posicion]=pedirString();
+				} while (confirmacion("Desea seguir introduciendo una pelicula (s/n)") == 's');
+				mostrar(datos,fecha,valor);
 				break;
 			case 2:
 				posicionFil = buscar(datos, posicionCon);
-				System.out.println("Que modificacion le quieres hacer");
 				datos[posicionFil - 1] = pedirString();
 				System.out.println(Arrays.toString(datos));
 				break;
@@ -31,7 +37,11 @@ public class menuFinal {
 				posicionFil = buscar(datos, posicionCon);
 				System.out.println("Desea borrar la pelicula");
 				datos[posicionFil - 1] = "x";
+				fecha[posicionFil - 1] = "x";
+				valor[posicionFil - 1] = "x";
 				System.out.println(Arrays.toString(datos));
+				System.out.println(Arrays.toString(fecha));
+				System.out.println(Arrays.toString(valor));
 
 				break;
 			case 4:
@@ -60,7 +70,7 @@ public class menuFinal {
 
 	/* BUSCAR POSICION LIBRE */
 
-	private static int buscarLibre(String[] lista, String dato) {
+	private static int buscarLibre(String[] lista, String[] lisFe,String[] lisVal, String dato) {
 		int posicion = -1;
 		int longitud = lista.length;
 		boolean encontrado = false;
@@ -132,12 +142,24 @@ public class menuFinal {
 	 * 
 	 * 
 	 */
+	public static void mostrar(String[] lista, String[] lisFe, String[] lisVal) {
+		int longitud=lista.length;
 
-	public static void inicializar(String[] lista, String dato) {
+		System.out.println("PELICULAS----FECHA----VALORACION");
+	
+			for(int i=0;i<longitud;i++) {
+				System.out.println("Pelicula: " +lista[i]+"; Es del año "+lisFe[i]+" y tiene una valoracion de ["+lisVal[i]+"]");
+
+		}
+	}
+
+	public static void inicializar(String[] lista, String[] lisFe, String[] lisVal, String dato) {
 		int longitud = lista.length;
 
 		for (int i = 0; i < longitud; i++) {
 			lista[i] = dato;
+			lisFe[i] = dato;
+			lisVal[i] = dato;
 		}
 	}
 
