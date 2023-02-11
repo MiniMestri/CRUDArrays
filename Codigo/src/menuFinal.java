@@ -5,28 +5,37 @@ public class menuFinal {
 
 	public static void main(String[] args) {
 		int num, posicion;
+		int posicionCon = 0;
 		String[] datos = new String[20];
+		int posicionFil;
 		inicializar(datos, "x");
-		
+
 		do {
 			menu();
 			num = pedirNumMenu();
 			switch (num) {
 			case 1:
-				posicion=buscarLibre(datos,"x");
+				posicion = buscarLibre(datos, "x");
 				System.out.println("Introduce una pelicula");
-				datos[posicion]=pedirString();
+				datos[posicion] = pedirString();
 				System.out.println(Arrays.toString(datos));
 
 				break;
 			case 2:
-
+				posicionFil = buscar(datos, posicionCon);
+				System.out.println("Que modificacion le quieres hacer");
+				datos[posicionFil - 1] = pedirString();
+				System.out.println(Arrays.toString(datos));
 				break;
 			case 3:
+				posicionFil = buscar(datos, posicionCon);
+				System.out.println("Desea borrar la pelicula");
+				datos[posicionFil - 1] = "x";
+				System.out.println(Arrays.toString(datos));
 
 				break;
 			case 4:
-				buscar(datos);
+				buscar(datos, posicionCon);
 				break;
 			}
 		} while (num != 5);
@@ -49,7 +58,6 @@ public class menuFinal {
 
 	}
 
-
 	/* BUSCAR POSICION LIBRE */
 
 	private static int buscarLibre(String[] lista, String dato) {
@@ -69,28 +77,23 @@ public class menuFinal {
 		return posicion;
 	}
 
-
-
 	/* BUSCAR */
-		private static void buscar(String[] lista) {
-			int longitud=lista.length;
-			boolean encontrado =false;
-			int contador=0;
-			String buscar;
-			
-			
-			System.out.println("Introduce el nombre de la pelicula");
-			buscar=pedirString();
-			do {
-				if(lista[contador].equals(buscar)) {
-					System.out.println("SI");
-					encontrado=true;
-				}
-				contador++;
-			}while(contador<longitud && !encontrado);
-		}
+	private static int buscar(String[] lista, int contador) {
+		int longitud = lista.length;
+		boolean encontrado = false;
+		String buscar;
 
-		
+		System.out.println("Introduce el nombre de la pelicula");
+		buscar = pedirString();
+		do {
+			if (lista[contador].equals(buscar)) {
+				encontrado = true;
+			}
+			contador++;
+		} while (contador < longitud && !encontrado);
+
+		return contador;
+	}
 
 	/*
 	 * 
@@ -129,6 +132,7 @@ public class menuFinal {
 	 * 
 	 * 
 	 */
+
 	public static void inicializar(String[] lista, String dato) {
 		int longitud = lista.length;
 
@@ -136,6 +140,7 @@ public class menuFinal {
 			lista[i] = dato;
 		}
 	}
+
 	/* Pedir numero entero */
 	private static int pedirNum() {
 
