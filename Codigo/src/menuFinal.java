@@ -6,11 +6,11 @@ public class menuFinal {
 	public static void main(String[] args) {
 		int num, posicion;
 		int posicionCon = 0;
-		String[] datos = new String[20];
-		String[] fecha = new String[20];
-		String[] valor = new String[20];
+		String[] datos = new String[3];
+		String[] fecha = new String[3];
+		String[] valor = new String[3];
 		int posicionFil;
-		inicializar(datos, fecha, valor, "x");
+		inicializar(datos, fecha, valor, "");
 
 		do {
 			menu();
@@ -18,34 +18,50 @@ public class menuFinal {
 			switch (num) {
 			case 1:
 				do {
-					posicion = buscarLibre(datos, fecha,valor, "x");
-					System.out.println("Introduce una pelicula");
-					datos[posicion] = pedirString();
-					System.out.println("Introduce una Fecha");
-					fecha[posicion] = pedirString();
-					System.out.println("Introduce una valoracion");
-					valor[posicion]=pedirString();
+					posicion = buscarLibre(datos, fecha, valor, "");
+					if (posicion != -1) {
+						System.out.println("Introduce una pelicula");
+						datos[posicion] = pedirString();
+						System.out.println("Introduce una Fecha");
+						fecha[posicion] = pedirString();
+						System.out.println("Introduce una valoracion");
+						valor[posicion] = pedirString();
+					} else {
+						System.out.println("Ha superado el maximo de peliculas para almacenar, elimine algun dato");
+					}
+
 				} while (confirmacion("Desea seguir introduciendo una pelicula (s/n)") == 's');
-				mostrar(datos,fecha,valor);
+				mostrar(datos, fecha, valor);
 				break;
 			case 2:
-				posicionFil = buscar(datos, posicionCon);
-				datos[posicionFil - 1] = pedirString();
-				System.out.println(Arrays.toString(datos));
+				do {
+					posicionFil = buscar(datos, fecha, valor, posicionCon);
+					if (posicionFil != datos.length) {
+						System.out.println("Introduce el nombre de la nueva pelicula");
+						datos[posicionFil] = pedirString();
+						System.out.println("Introduce la fecha de la nueva pelicula");
+						fecha[posicionFil] = pedirString();
+						System.out.println("Introduce la valoracion de la nueva pelicula");
+						valor[posicionFil] = pedirString();
+					}
+				} while (confirmacion("Desea modificar otra pelicuala (s/n)") == 's');
+				mostrar(datos, fecha, valor);
 				break;
 			case 3:
-				posicionFil = buscar(datos, posicionCon);
-				System.out.println("Desea borrar la pelicula");
-				datos[posicionFil - 1] = "x";
-				fecha[posicionFil - 1] = "x";
-				valor[posicionFil - 1] = "x";
-				System.out.println(Arrays.toString(datos));
-				System.out.println(Arrays.toString(fecha));
-				System.out.println(Arrays.toString(valor));
+				do {
+					posicionFil = buscar(datos, fecha, valor, posicionCon);
+					if (posicionFil != datos.length) {
+						System.out.println("La pelicula se ha borrado correctamente");
+						datos[posicionFil] = "";
+						fecha[posicionFil] = "";
+						valor[posicionFil] = "";
+					}
+				} while (confirmacion("Desea borrar otra pelicula (s/n)") == 's');
+				mostrar(datos, fecha, valor);
 
 				break;
 			case 4:
-				buscar(datos, posicionCon);
+				buscar(datos, fecha, valor, posicionCon);
 				break;
 			}
 		} while (num != 5);
@@ -70,7 +86,7 @@ public class menuFinal {
 
 	/* BUSCAR POSICION LIBRE */
 
-	private static int buscarLibre(String[] lista, String[] lisFe,String[] lisVal, String dato) {
+	private static int buscarLibre(String[] lista, String[] lisFe, String[] lisVal, String dato) {
 		int posicion = -1;
 		int longitud = lista.length;
 		boolean encontrado = false;
@@ -88,20 +104,25 @@ public class menuFinal {
 	}
 
 	/* BUSCAR */
-	private static int buscar(String[] lista, int contador) {
+	private static int buscar(String[] lista, String[] lisFe, String[] lisVal, int contador) {
 		int longitud = lista.length;
 		boolean encontrado = false;
 		String buscar;
-
 		System.out.println("Introduce el nombre de la pelicula");
 		buscar = pedirString();
 		do {
 			if (lista[contador].equals(buscar)) {
 				encontrado = true;
+
 			}
 			contador++;
 		} while (contador < longitud && !encontrado);
 
+		if (encontrado) {
+			contador -= 1;
+		} else {
+			System.out.println("La pelicula no existe");
+		}
 		return contador;
 	}
 
@@ -112,43 +133,13 @@ public class menuFinal {
 	 * 
 	 * 
 	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
 	 */
 	public static void mostrar(String[] lista, String[] lisFe, String[] lisVal) {
-		int longitud=lista.length;
+		int longitud = lista.length;
 
-		System.out.println("PELICULAS----FECHA----VALORACION");
-	
-			for(int i=0;i<longitud;i++) {
-				System.out.println("Pelicula: " +lista[i]+"; Es del año "+lisFe[i]+" y tiene una valoracion de ["+lisVal[i]+"]");
+		for (int i = 0; i < longitud; i++) {
+			System.out.println("Pelicula: " + lista[i] + "; Es de la fecha " + lisFe[i] + " y tiene una valoracion de ["
+					+ lisVal[i] + "]");
 
 		}
 	}
