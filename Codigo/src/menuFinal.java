@@ -129,10 +129,6 @@ public class menuFinal {
 	/*
 	 * 
 	 * 
-	 * 
-	 * 
-	 * 
-	 * 
 	 */
 	public static void mostrar(String[] lista, String[] lisFe, String[] lisVal) {
 		int longitud = lista.length;
