@@ -22,10 +22,8 @@ public class menuFinal {
 					if (posicion != -1) {
 						System.out.println("Introduce una pelicula");
 						datos[posicion] = pedirString();
-						System.out.println("Introduce una fecha");
-						fecha[posicion] = pedirString();
-						System.out.println("Introduce una valoracion");
-						valor[posicion] = pedirString();
+						fecha[posicion] = comprobacionFecha("Introduce una fecha");
+						valor[posicion] = comprobacionValor("Introduce una valoracion");
 					} else {
 						System.out.println("Ha superado el maximo de peliculas para almacenar, elimine algun dato");
 					}
@@ -39,10 +37,8 @@ public class menuFinal {
 					if (posicionFil != datos.length) {
 						System.out.println("Introduce el nombre de una nueva pelicula");
 						datos[posicionFil] = pedirString();
-						System.out.println("Introduce la fecha de la nueva pelicula");
-						fecha[posicionFil] = pedirString();
-						System.out.println("Introduce la valoracion de la nueva pelicula");
-						valor[posicionFil] = pedirString();
+						fecha[posicionFil] = comprobacionFecha("Introduce la fecha de la nueva pelicula");
+						valor[posicionFil] = comprobacionValor("Introduce la valoracion de la nueva pelicula");
 					}
 				} while (confirmacion("Desea modificar otra pelicula (s/n)") == 's');
 				mostrar(datos, fecha, valor);
@@ -130,23 +126,68 @@ public class menuFinal {
 	 * 
 	 * 
 	 */
-	public static void mostrar(String[] lista, String[] lisFe, String[] lisVal) {
-		String vacio="";
-		int longitud = lista.length;
-		int i=0;
-		boolean encontrado=false;
+	public static String comprobacionValor(String texto) {
+		String fecha;
+		int longitud;
+		String cadena = "1234567890";
+		boolean encontrado;
+
+		System.out.println(texto);
 		do {
-		if(lista[i].equals(vacio)){
-			System.out.println("No hay nada que mostrar");
-			encontrado=true;
-		}else {
-			System.out.println("Pelicula: " + lista[i] + "; Fecha " + lisFe[i] + " Valoracion de ["
-					+ lisVal[i] + "]");
-		}
-		i++;
-		}while(!encontrado);
+			encontrado = false;
+			fecha = pedirString();
+			longitud = fecha.length();
+
+			if (cadena.indexOf(fecha.charAt(0)) == -1) {
+				encontrado = true;
+				System.out.println("El valor introducido no es numerico vuelve a introducirlo");
+			} else if (longitud != 1) {
+				System.out.println("La longitud no es la correcta vuelva a introducir la fecha");
+			}
+		} while (encontrado || longitud != 1);
+		return fecha;
+
 	}
 
+	public static String comprobacionFecha(String texto) {
+		String fecha;
+		int longitud;
+		String cadena = "1234567890";
+		boolean encontrado;
+
+		System.out.println(texto);
+		do {
+			encontrado = false;
+			fecha = pedirString();
+			longitud = fecha.length();
+
+			for (int i = 0; i < longitud && !encontrado; i++) {
+				if (cadena.indexOf(fecha.charAt(i)) == -1) {
+					encontrado = true;
+					System.out.println("El valor introducido no es numerico vuelve a introducirlo");
+				} else if (longitud != 4) {
+					System.out.println("La longitud no es la correcta vuelva a introducir la fecha");
+					encontrado = true;
+				}
+			}
+		} while (encontrado || longitud != 4);
+		return fecha;
+	}
+
+	public static void mostrar(String[] lista, String[] lisFe, String[] lisVal) {
+		String vacio = "";
+		int i = 0;
+		boolean encontrado = false;
+		do {
+			if (lista[i].equals(vacio)) {
+				encontrado = true;
+			} else {
+				System.out.println(
+						"Pelicula: " + lista[i] + "; Fecha " + lisFe[i] + " Valoracion de [" + lisVal[i] + "]");
+			}
+			i++;
+		} while (!encontrado);
+	}
 
 	public static void inicializar(String[] lista, String[] lisFe, String[] lisVal, String dato) {
 		int longitud = lista.length;
