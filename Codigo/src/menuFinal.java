@@ -6,9 +6,9 @@ public class menuFinal {
 	public static void main(String[] args) {
 		int num, posicion;
 		int posicionCon = 0;
-		String[] datos = new String[3];
-		String[] fecha = new String[3];
-		String[] valor = new String[3];
+		String[] datos = new String[20];
+		String[] fecha = new String[20];
+		String[] valor = new String[20];
 		int posicionFil;
 		inicializar(datos, fecha, valor, "");
 
@@ -22,7 +22,7 @@ public class menuFinal {
 					if (posicion != -1) {
 						System.out.println("Introduce una pelicula");
 						datos[posicion] = pedirString();
-						System.out.println("Introduce una Fecha");
+						System.out.println("Introduce una fecha");
 						fecha[posicion] = pedirString();
 						System.out.println("Introduce una valoracion");
 						valor[posicion] = pedirString();
@@ -30,21 +30,21 @@ public class menuFinal {
 						System.out.println("Ha superado el maximo de peliculas para almacenar, elimine algun dato");
 					}
 
-				} while (confirmacion("Desea seguir introduciendo una pelicula (s/n)") == 's');
+				} while (confirmacion("Desea seguir creando peliculas (s/n)") == 's');
 				mostrar(datos, fecha, valor);
 				break;
 			case 2:
 				do {
 					posicionFil = buscar(datos, fecha, valor, posicionCon);
 					if (posicionFil != datos.length) {
-						System.out.println("Introduce el nombre de la nueva pelicula");
+						System.out.println("Introduce el nombre de una nueva pelicula");
 						datos[posicionFil] = pedirString();
 						System.out.println("Introduce la fecha de la nueva pelicula");
 						fecha[posicionFil] = pedirString();
 						System.out.println("Introduce la valoracion de la nueva pelicula");
 						valor[posicionFil] = pedirString();
 					}
-				} while (confirmacion("Desea modificar otra pelicuala (s/n)") == 's');
+				} while (confirmacion("Desea modificar otra pelicula (s/n)") == 's');
 				mostrar(datos, fecha, valor);
 				break;
 			case 3:
@@ -131,14 +131,22 @@ public class menuFinal {
 	 * 
 	 */
 	public static void mostrar(String[] lista, String[] lisFe, String[] lisVal) {
+		String vacio="";
 		int longitud = lista.length;
-
-		for (int i = 0; i < longitud; i++) {
-			System.out.println("Pelicula: " + lista[i] + "; Es de la fecha " + lisFe[i] + " y tiene una valoracion de ["
+		int i=0;
+		boolean encontrado=false;
+		do {
+		if(lista[i].equals(vacio)){
+			System.out.println("No hay nada que mostrar");
+			encontrado=true;
+		}else {
+			System.out.println("Pelicula: " + lista[i] + "; Fecha " + lisFe[i] + " Valoracion de ["
 					+ lisVal[i] + "]");
-
 		}
+		i++;
+		}while(!encontrado);
 	}
+
 
 	public static void inicializar(String[] lista, String[] lisFe, String[] lisVal, String dato) {
 		int longitud = lista.length;
