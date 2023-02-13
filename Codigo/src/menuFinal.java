@@ -1,63 +1,69 @@
-import java.util.Arrays;
-import java.util.Scanner;
-
 public class menuFinal {
 
 	public static void main(String[] args) {
-		int num, posicion;
-		int posicionCon = 0;
+		int num, posicionLibre;
+		int posicionContador = 0;
 		String[] datos = new String[20];
 		String[] fecha = new String[20];
-		String[] valor = new String[20];
-		int posicionFil;
-		inicializar(datos, fecha, valor, "");
+		String[] valoracion = new String[20];
+		int posicionComodin;
+		inicializar(datos, fecha, valoracion, "");
 
 		do {
 			menu();
-			num = pedirNumMenu();
+			num = utilidades.pedirNumMenu();
 			switch (num) {
 			case 1:
 				do {
-					posicion = buscarLibre(datos, fecha, valor, "");
-					if (posicion != -1) {
+					posicionLibre = buscarLibre(datos, fecha, valoracion, "");
+					if (posicionLibre != -1) {
 						System.out.println("Introduce una pelicula");
-						datos[posicion] = pedirString();
-						fecha[posicion] = comprobacionFecha("Introduce una fecha");
-						valor[posicion] = comprobacionValor("Introduce una valoracion");
+						datos[posicionLibre] = utilidades.pedirString();
+						fecha[posicionLibre] = comprobacionFecha("Introduce una fecha");
+						valoracion[posicionLibre] = comprobacionValoracion("Introduce una valoracion");
 					} else {
 						System.out.println("Ha superado el maximo de peliculas para almacenar, elimine algun dato");
 					}
 
-				} while (confirmacion("Desea seguir creando peliculas (s/n)") == 's');
-				mostrar(datos, fecha, valor);
+				} while (utilidades.confirmacion("Desea seguir creando peliculas (s/n)") == 's');
+				mostrar(datos, fecha, valoracion);
 				break;
 			case 2:
 				do {
-					posicionFil = buscar(datos, fecha, valor, posicionCon);
-					if (posicionFil != datos.length) {
+					posicionComodin = buscar(datos, fecha, valoracion, posicionContador);
+					if (posicionComodin != datos.length) {
 						System.out.println("Introduce el nombre de una nueva pelicula");
-						datos[posicionFil] = pedirString();
-						fecha[posicionFil] = comprobacionFecha("Introduce la fecha de la nueva pelicula");
-						valor[posicionFil] = comprobacionValor("Introduce la valoracion de la nueva pelicula");
+						datos[posicionComodin] = utilidades.pedirString();
+						fecha[posicionComodin] = comprobacionFecha("Introduce la fecha de la nueva pelicula");
+						valoracion[posicionComodin] = comprobacionValoracion(
+								"Introduce la valoracion de la nueva pelicula");
 					}
-				} while (confirmacion("Desea modificar otra pelicula (s/n)") == 's');
-				mostrar(datos, fecha, valor);
+				} while (utilidades.confirmacion("Desea modificar otra pelicula (s/n)") == 's');
+				mostrar(datos, fecha, valoracion);
 				break;
 			case 3:
 				do {
-					posicionFil = buscar(datos, fecha, valor, posicionCon);
-					if (posicionFil != datos.length) {
+					posicionComodin = buscar(datos, fecha, valoracion, posicionContador);
+					if (posicionComodin != datos.length) {
 						System.out.println("La pelicula se ha borrado correctamente");
-						datos[posicionFil] = "";
-						fecha[posicionFil] = "";
-						valor[posicionFil] = "";
+						datos[posicionComodin] = "";
+						fecha[posicionComodin] = "";
+						valoracion[posicionComodin] = "";
 					}
-				} while (confirmacion("Desea borrar otra pelicula (s/n)") == 's');
-				mostrar(datos, fecha, valor);
+				} while (utilidades.confirmacion("Desea borrar otra pelicula (s/n)") == 's');
 
 				break;
 			case 4:
-				buscar(datos, fecha, valor, posicionCon);
+				if (utilidades.confirmacion("Quiere mostrar todo (s) o buscar solo una pelicula (n)") == 's') {
+					mostrar(datos, fecha, valoracion);
+				} else {
+					do {
+						posicionComodin = buscar(datos, fecha, valoracion, posicionContador);
+						System.out.println("La pelicula " + datos[posicionComodin] + " se estreno en el ano "
+								+ fecha[posicionComodin] + ". Tiene una valoracion de (" + valoracion[posicionComodin]
+								+ "/10)");
+					} while (utilidades.confirmacion("Quiere buscar otra pelicula (s/n)") == 's');
+				}
 				break;
 			}
 		} while (num != 5);
@@ -105,7 +111,7 @@ public class menuFinal {
 		boolean encontrado = false;
 		String buscar;
 		System.out.println("Introduce el nombre de la pelicula");
-		buscar = pedirString();
+		buscar = utilidades.pedirString();
 		do {
 			if (lista[contador].equals(buscar)) {
 				encontrado = true;
@@ -122,11 +128,7 @@ public class menuFinal {
 		return contador;
 	}
 
-	/*
-	 * 
-	 * 
-	 */
-	public static String comprobacionValor(String texto) {
+	private static String comprobacionValoracion(String texto) {
 		String fecha;
 		int longitud;
 		String cadena = "1234567890";
@@ -135,7 +137,7 @@ public class menuFinal {
 		System.out.println(texto);
 		do {
 			encontrado = false;
-			fecha = pedirString();
+			fecha = utilidades.pedirString();
 			longitud = fecha.length();
 
 			if (cadena.indexOf(fecha.charAt(0)) == -1) {
@@ -149,7 +151,7 @@ public class menuFinal {
 
 	}
 
-	public static String comprobacionFecha(String texto) {
+	private static String comprobacionFecha(String texto) {
 		String fecha;
 		int longitud;
 		String cadena = "1234567890";
@@ -158,7 +160,7 @@ public class menuFinal {
 		System.out.println(texto);
 		do {
 			encontrado = false;
-			fecha = pedirString();
+			fecha = utilidades.pedirString();
 			longitud = fecha.length();
 
 			for (int i = 0; i < longitud && !encontrado; i++) {
@@ -174,7 +176,7 @@ public class menuFinal {
 		return fecha;
 	}
 
-	public static void mostrar(String[] lista, String[] lisFe, String[] lisVal) {
+	private static void mostrar(String[] lista, String[] lisFe, String[] lisVal) {
 		String vacio = "";
 		int i = 0;
 		boolean encontrado = false;
@@ -183,13 +185,15 @@ public class menuFinal {
 				encontrado = true;
 			} else {
 				System.out.println(
-						"Pelicula: " + lista[i] + "; Fecha " + lisFe[i] + " Valoracion de [" + lisVal[i] + "]");
+						"Pelicula: " + lista[i] + "; Fecha (" + lisFe[i] + ") Valoracion de [" + lisVal[i] + "]");
 			}
 			i++;
 		} while (!encontrado);
 	}
 
-	public static void inicializar(String[] lista, String[] lisFe, String[] lisVal, String dato) {
+
+
+	private static void inicializar(String[] lista, String[] lisFe, String[] lisVal, String dato) {
 		int longitud = lista.length;
 
 		for (int i = 0; i < longitud; i++) {
@@ -199,62 +203,4 @@ public class menuFinal {
 		}
 	}
 
-	/* Pedir numero entero */
-	private static int pedirNum() {
-
-		int num;
-
-		Scanner lector = new Scanner(System.in);
-
-		num = lector.nextInt();
-		lector.nextLine();
-
-		return num;
-
-	}
-
-	/* Pedir numero menu */
-	private static int pedirNumMenu() {
-
-		int num;
-		Scanner lector = new Scanner(System.in);
-
-		num = lector.nextInt();
-		lector.nextLine();
-
-		while (num < 1 || num > 5) {
-			System.out.println("Error vuelva a elegir una opcion");
-			num = lector.nextInt();
-			lector.nextLine();
-		}
-
-		return num;
-
-	}
-
-	/* pedir string */
-	private static String pedirString() {
-
-		String dato;
-		Scanner lector = new Scanner(System.in);
-
-		dato = lector.nextLine();
-
-		return dato;
-
-	}
-
-	private static char confirmacion(String texto) {
-		char letra = 0;
-		Scanner lector = new Scanner(System.in);
-
-		System.out.println(texto);
-		letra = lector.next().charAt(0);
-
-		while (letra != 's' && letra != 'n') {
-			System.out.println("No se reconoce, vuelva a introducir (n o s)");
-			letra = lector.next().charAt(0);
-		}
-		return letra;
-	}
 }
