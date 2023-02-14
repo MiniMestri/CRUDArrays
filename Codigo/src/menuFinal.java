@@ -10,9 +10,9 @@ public class menuFinal {
 	public static void main(String[] args) {
 		int num, posicionLibre;
 		int posicionContador = 0;
-		String[] datos = new String[20];
-		String[] fecha = new String[20];
-		String[] valoracion = new String[20];
+		String[] datos = new String[3];
+		String[] fecha = new String[3];
+		String[] valoracion = new String[3];
 		int posicionComodin;
 		inicializar(datos, fecha, valoracion, "");
 
@@ -33,7 +33,6 @@ public class menuFinal {
 					}
 
 				} while (utilidades.confirmacion("Desea seguir creando peliculas (s/n)") == 's');
-				mostrar(datos, fecha, valoracion);
 				break;
 			case 2:
 				do {
@@ -46,7 +45,7 @@ public class menuFinal {
 								"Introduce la valoracion de la nueva pelicula");
 					}
 				} while (utilidades.confirmacion("Desea modificar otra pelicula (s/n)") == 's');
-				mostrar(datos, fecha, valoracion);
+
 				break;
 			case 3:
 				do {
@@ -61,16 +60,18 @@ public class menuFinal {
 
 				break;
 			case 4:
+				do {
 				if (utilidades.confirmacion("Quiere mostrar todo (s) o buscar solo una pelicula (n)") == 's') {
 					mostrar(datos, fecha, valoracion);
 				} else {
-					do {
 						posicionComodin = buscar(datos, fecha, valoracion);
+						if (posicionComodin != datos.length) {
 						System.out.println("La pelicula " + datos[posicionComodin] + " se estreno en el ano "
 								+ fecha[posicionComodin] + ". Tiene una valoracion de (" + valoracion[posicionComodin]
 								+ "/10)");
-					} while (utilidades.confirmacion("Quiere buscar otra pelicula (s/n)") == 's');
-				}
+						}
+					} 
+				}while (utilidades.confirmacion("Quiere buscar otra pelicula (s/n)") == 's');
 				break;
 			}
 		} while (num != 5);
@@ -239,18 +240,11 @@ public class menuFinal {
 	 * 
 	 */
 	public static void mostrar(String[] lista, String[] lisFe, String[] lisVal) {
-		String vacio = "";
-		int i = 0;
-		boolean encontrado = false;
-		do {
-			if (lista[i].equals(vacio)) {
-				encontrado = true;
-			} else {
-				System.out.println(
-						"Pelicula: " + lista[i] + "; Fecha (" + lisFe[i] + ") Valoracion de [" + lisVal[i] + "]");
-			}
-			i++;
-		} while (!encontrado);
+		int longitud=lista.length;
+	
+		for(int i=0;i<longitud;i++) {
+				System.out.println("Pelicula: " + lista[i] + "; Fecha (" + lisFe[i] + ") Valoracion de [" + lisVal[i] + "]");
+		}
 	}
 
 	/**
