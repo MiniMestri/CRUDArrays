@@ -8,26 +8,25 @@
 public class menuFinal {
 
 	public static void main(String[] args) {
-		int num, posicionLibre;
+		int num, posicionComodin;
 		int posicionContador = 0;
-		String[] datos = new String[3];
-		String[] fecha = new String[3];
-		String[] valoracion = new String[3];
-		int posicionComodin;
-		inicializar(datos, fecha, valoracion, "");
+		String[] datos = new String[20];
+		String[] fecha = new String[20];
+		String[] valoracion = new String[20];
 
+		inicializar(datos, fecha, valoracion, "");
 		do {
 			menu();
 			num = utilidades.pedirNumMenu();
 			switch (num) {
 			case 1:
 				do {
-					posicionLibre = buscarLibre(datos, fecha, valoracion, "");
-					if (posicionLibre != -1) {
+					posicionComodin = buscarLibre(datos, fecha, valoracion, "");
+					if (posicionComodin != -1) {
 						System.out.println("Introduce una pelicula");
-						datos[posicionLibre] = utilidades.pedirString();
-						fecha[posicionLibre] = comprobacionFecha("Introduce una fecha");
-						valoracion[posicionLibre] = comprobacionValoracion("Introduce una valoracion");
+						datos[posicionComodin] = utilidades.pedirString();
+						fecha[posicionComodin] = comprobacionFecha("Introduce una fecha");
+						valoracion[posicionComodin] = comprobacionValoracion("Introduce una valoracion");
 					} else {
 						System.out.println("Ha superado el maximo de peliculas para almacenar, elimine algun dato");
 					}
@@ -61,21 +60,24 @@ public class menuFinal {
 				break;
 			case 4:
 				do {
-				if (utilidades.confirmacion("Quiere mostrar todo (s) o buscar solo una pelicula (n)") == 's') {
-					mostrar(datos, fecha, valoracion);
-				} else {
+					if (utilidades.confirmacion("Quiere mostrar todo (s) o buscar solo una pelicula (n)") == 's') {
+						mostrar(datos, fecha, valoracion);
+					} else {
 						posicionComodin = buscar(datos, fecha, valoracion);
 						if (posicionComodin != datos.length) {
-						System.out.println("La pelicula " + datos[posicionComodin] + " se estreno en el ano "
-								+ fecha[posicionComodin] + ". Tiene una valoracion de (" + valoracion[posicionComodin]
-								+ "/10)");
+							System.out.println("La pelicula " + datos[posicionComodin] + " se estreno en el ano "
+									+ fecha[posicionComodin] + ". Tiene una valoracion de ("
+									+ valoracion[posicionComodin] + "/10)");
 						}
-					} 
-				}while (utilidades.confirmacion("Quiere buscar otra pelicula (s/n)") == 's');
+					}
+				} while (utilidades.confirmacion("Desea hacer otra consulta (s/n)") == 's');
+				break;
+			default:
+				System.out.println("Gracias por utilizar el Menu de MiniMestri :D");
 				break;
 			}
 		} while (num != 5);
-		System.out.println("Gracias por utilizar el Menu de MiniMestri :D");
+
 	}
 
 	/**
@@ -174,7 +176,7 @@ public class menuFinal {
 	 * @return String Fecha de la película en Sring.
 	 */
 	public static String comprobacionValoracion(String texto) {
-		String fecha;
+		String valoracion;
 		int longitud;
 		String cadena = "1234567890";
 		boolean encontrado;
@@ -182,17 +184,17 @@ public class menuFinal {
 		System.out.println(texto);
 		do {
 			encontrado = false;
-			fecha = utilidades.pedirString();
-			longitud = fecha.length();
+			valoracion = utilidades.pedirString();
+			longitud = valoracion.length();
 
-			if (cadena.indexOf(fecha.charAt(0)) == -1) {
+			if (cadena.indexOf(valoracion.charAt(0)) == -1) {
 				encontrado = true;
 				System.out.println("El valor introducido no es numerico vuelve a introducirlo");
 			} else if (longitud != 1) {
 				System.out.println("La longitud no es la correcta vuelva a introducir la fecha");
 			}
 		} while (encontrado || longitud != 1);
-		return fecha;
+		return valoracion;
 
 	}
 
@@ -240,10 +242,11 @@ public class menuFinal {
 	 * 
 	 */
 	public static void mostrar(String[] lista, String[] lisFe, String[] lisVal) {
-		int longitud=lista.length;
-	
-		for(int i=0;i<longitud;i++) {
-				System.out.println("Pelicula: " + lista[i] + "; Fecha (" + lisFe[i] + ") Valoracion de [" + lisVal[i] + "]");
+		int longitud = lista.length;
+
+		for (int i = 0; i < longitud; i++) {
+			System.out
+					.println("Pelicula: " + lista[i] + "; Fecha (" + lisFe[i] + ") Valoracion de [" + lisVal[i] + "]");
 		}
 	}
 
