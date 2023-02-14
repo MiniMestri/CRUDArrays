@@ -1,3 +1,10 @@
+/**
+ * Programa CRUD donde mediante interacción por teclado se navegará por las
+ * distintas opciones del menú con el tema peliculas
+ * 
+ * 
+ * @author Alfonso Lopez Delgado
+ */
 public class menuFinal {
 
 	public static void main(String[] args) {
@@ -30,7 +37,7 @@ public class menuFinal {
 				break;
 			case 2:
 				do {
-					posicionComodin = buscar(datos, fecha, valoracion, posicionContador);
+					posicionComodin = buscar(datos, fecha, valoracion);
 					if (posicionComodin != datos.length) {
 						System.out.println("Introduce el nombre de una nueva pelicula");
 						datos[posicionComodin] = utilidades.pedirString();
@@ -43,7 +50,7 @@ public class menuFinal {
 				break;
 			case 3:
 				do {
-					posicionComodin = buscar(datos, fecha, valoracion, posicionContador);
+					posicionComodin = buscar(datos, fecha, valoracion);
 					if (posicionComodin != datos.length) {
 						System.out.println("La pelicula se ha borrado correctamente");
 						datos[posicionComodin] = "";
@@ -58,7 +65,7 @@ public class menuFinal {
 					mostrar(datos, fecha, valoracion);
 				} else {
 					do {
-						posicionComodin = buscar(datos, fecha, valoracion, posicionContador);
+						posicionComodin = buscar(datos, fecha, valoracion);
 						System.out.println("La pelicula " + datos[posicionComodin] + " se estreno en el ano "
 								+ fecha[posicionComodin] + ". Tiene una valoracion de (" + valoracion[posicionComodin]
 								+ "/10)");
@@ -69,7 +76,10 @@ public class menuFinal {
 		} while (num != 5);
 		System.out.println("Gracias por utilizar el Menu de MiniMestri :D");
 	}
-	/* MENU */
+
+	/**
+	 * Estética menú
+	 */
 
 	private static void menu() {
 		System.out.println("-------------------------");
@@ -86,14 +96,27 @@ public class menuFinal {
 
 	}
 
-	/* BUSCAR POSICION LIBRE */
-
-	private static int buscarLibre(String[] lista, String[] lisFe, String[] lisVal, String dato) {
+	/**
+	 * Método para calcular la próxima posición del array sin datos guardados
+	 * 
+	 * 
+	 * @param lista  Array lista para alamacenar peliculas
+	 * @param lisFe  Array lista para alamacenar fecha
+	 * @param lisVal Array lista para alamacenar la valoración
+	 * @param dato   String de inicializacion
+	 * 
+	 * @return int posición
+	 */
+	public static int buscarLibre(String[] lista, String[] lisFe, String[] lisVal, String dato) {
 		int posicion = -1;
 		int longitud = lista.length;
 		boolean encontrado = false;
 		int contador = 0;
 
+		/*
+		 * Bucle para encontrar el siguiente valor, donde en el main lo inicializamos a
+		 * ""
+		 */
 		while (contador < longitud && !encontrado) {
 			if (lista[contador].equals(dato)) {
 				encontrado = true;
@@ -105,9 +128,20 @@ public class menuFinal {
 		return posicion;
 	}
 
-	/* BUSCAR */
-	private static int buscar(String[] lista, String[] lisFe, String[] lisVal, int contador) {
+	/**
+	 * Método para buscar una película que coincida con alguna del Array lista
+	 * previamente introducido, con el dato introducido por teclado.
+	 * 
+	 * 
+	 * @param lista  Array lista para alamacenar peliculas.
+	 * @param lisFe  Array lista para alamacenar fecha.
+	 * @param lisVal Array lista para alamacenar la valoración.
+	 * 
+	 * @return int Posición de la película buscada
+	 */
+	public static int buscar(String[] lista, String[] lisFe, String[] lisVal) {
 		int longitud = lista.length;
+		int contador = 0;
 		boolean encontrado = false;
 		String buscar;
 		System.out.println("Introduce el nombre de la pelicula");
@@ -115,11 +149,13 @@ public class menuFinal {
 		do {
 			if (lista[contador].equals(buscar)) {
 				encontrado = true;
-
 			}
 			contador++;
 		} while (contador < longitud && !encontrado);
 
+		/*
+		 * Evitar la vuelta extra para que coincida la posicion con las listas de Arrays
+		 */
 		if (encontrado) {
 			contador -= 1;
 		} else {
@@ -128,7 +164,15 @@ public class menuFinal {
 		return contador;
 	}
 
-	private static String comprobacionValoracion(String texto) {
+	/**
+	 * Método de introducción por teclado de una valoracion tipo String y posterior
+	 * validación, controlando la simbología y la longitud.
+	 * 
+	 * @param texto Lanza un texto por pantalla.
+	 * 
+	 * @return String Fecha de la película en Sring.
+	 */
+	public static String comprobacionValoracion(String texto) {
 		String fecha;
 		int longitud;
 		String cadena = "1234567890";
@@ -151,7 +195,15 @@ public class menuFinal {
 
 	}
 
-	private static String comprobacionFecha(String texto) {
+	/**
+	 * Método de introducción por teclado de una fecha tipo String y posterior
+	 * validación, controlando la simbología y la longitud.
+	 * 
+	 * @param texto Lanza un texto por pantalla.
+	 * 
+	 * @return String Fecha de la película en Sring.
+	 */
+	public static String comprobacionFecha(String texto) {
 		String fecha;
 		int longitud;
 		String cadena = "1234567890";
@@ -176,7 +228,17 @@ public class menuFinal {
 		return fecha;
 	}
 
-	private static void mostrar(String[] lista, String[] lisFe, String[] lisVal) {
+	/**
+	 * Método para mostrar los datos, previamente introducidos mediante otros
+	 * métodos, y sacarlos por pantalla.
+	 * 
+	 * 
+	 * @param lista  Array lista para alamacenar peliculas.
+	 * @param lisFe  Array lista para alamacenar fecha.
+	 * @param lisVal Array lista para alamacenar la valoración.
+	 * 
+	 */
+	public static void mostrar(String[] lista, String[] lisFe, String[] lisVal) {
 		String vacio = "";
 		int i = 0;
 		boolean encontrado = false;
@@ -191,9 +253,19 @@ public class menuFinal {
 		} while (!encontrado);
 	}
 
+	/**
+	 * Método que inicializa lista, lisFe, lisVal con lo introducido en el
+	 * paramatetro dato
+	 * 
+	 * 
+	 * @param lista  Array lista para alamacenar peliculas.
+	 * @param lisFe  Array lista para alamacenar fecha.
+	 * @param lisVal Array lista para alamacenar la valoración.
+	 * @param dato   String de inicialización
+	 * 
+	 */
 
-
-	private static void inicializar(String[] lista, String[] lisFe, String[] lisVal, String dato) {
+	public static void inicializar(String[] lista, String[] lisFe, String[] lisVal, String dato) {
 		int longitud = lista.length;
 
 		for (int i = 0; i < longitud; i++) {
