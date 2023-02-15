@@ -9,7 +9,6 @@ public class menuFinal {
 
 	public static void main(String[] args) {
 		int num, posicionComodin;
-		int posicionContador = 0;
 		String[] datos = new String[20];
 		String[] fecha = new String[20];
 		String[] valoracion = new String[20];
@@ -114,10 +113,6 @@ public class menuFinal {
 		boolean encontrado = false;
 		int contador = 0;
 
-		/*
-		 * Bucle para encontrar el siguiente valor, donde en el main lo inicializamos a
-		 * ""
-		 */
 		while (contador < longitud && !encontrado) {
 			if (lista[contador].equals(dato)) {
 				encontrado = true;
@@ -154,9 +149,6 @@ public class menuFinal {
 			contador++;
 		} while (contador < longitud && !encontrado);
 
-		/*
-		 * Evitar la vuelta extra para que coincida la posicion con las listas de Arrays
-		 */
 		if (encontrado) {
 			contador -= 1;
 		} else {
