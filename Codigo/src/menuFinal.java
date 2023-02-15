@@ -74,10 +74,8 @@ public class menuFinal {
 				break;
 			default:
 				System.out.println("Gracias por utilizar el Menu de MiniMestri :D");
-				break;
 			}
 		} while (num != 5);
-
 	}
 
 	/**
