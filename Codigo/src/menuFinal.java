@@ -67,7 +67,7 @@ public class menuFinal {
 						if (posicionComodin != datos.length) {
 							System.out.println("La pelicula " + datos[posicionComodin] + " se estreno en el ano "
 									+ fecha[posicionComodin] + ". Tiene una valoracion de ("
-									+ valoracion[posicionComodin] + "/10)");
+									+ valoracion[posicionComodin] + "/9)");
 						}
 					}
 				} while (utilidades.confirmacion("Desea hacer otra consulta (s/n)") == 's');
